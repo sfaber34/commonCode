@@ -6,6 +6,8 @@ function n1, var
   return, float(n_elements(var))
 end
 
+
+
 function xLog, aIn,bIn,count
     a=float(min([aIn,bIn]))
     b=float(max([aIn,bIn]))
@@ -14,11 +16,15 @@ function xLog, aIn,bIn,count
     return, vals
 end  
 
+
+
 function med, var
   varSort=sort(var)
   varSorted=var[varSort]
 return,median(varSorted,/double,/even)
 end
+
+
 
 function q1, var
   varSort=sort(var)
@@ -26,21 +32,29 @@ function q1, var
   return,varSorted[n_elements(var)*.25]
 end
 
+
+
 function q3, var
   varSort=sort(var)
   varSorted=var[varSort]
   return,varSorted[n_elements(var)*.75]
 end
 
+
+
 function f, var
   return, var[where(finite(var) eq 1)]
 end
+
+
 
 function nan, var
   return, replicate(!values.d_nan,var)
 end
 
-function makeHist, var, binsize
+
+
+function hist, var, binsize
   
   sortvar=sort(var)
   var=var[sortvar]
@@ -64,3 +78,16 @@ function makeHist, var, binsize
   b1.xticklen=0
   return,b1
 end  
+
+
+
+
+function lp, xVar,yVar
+  if xVar eq 0 then begin
+    p1=plot(yvar,dimensions=[1600,1200],thick=2,margin=50,/device)
+  endif else begin
+    p1=plot(xvar,yvar,dimensions=[1600,1200],thick=2,margin=50,/device)
+  endelse
+  
+  return,p1
+end
