@@ -2,6 +2,8 @@ function n, var
   return, float(n_elements(var)-1)
 end
 
+
+
 function n1, var
   return, float(n_elements(var))
 end
@@ -70,7 +72,7 @@ function hist, var, binsize
     means=[means,mean([[inds[i]],[inds[i+1]]])]
   endfor
   
-  b1=barplot(dindgen(n1(h1)),h1/n1(var),dimensions=[1800,1000],histogram=1,margin=[50,100,50,50],/device)
+  b1=barplot(dindgen(n1(h1)),h1/n1(var),dimensions=[1800,1000],histogram=1,margin=[50,100,50,50],/device,font_size=22)
   b1.xrange=[0,n1(h1)]
   b1.xmajor=n1(h1)+1
   b1.xtickname=[string(inds),string(max(var)),' ',' ']
@@ -82,12 +84,24 @@ end
 
 
 
-function lp, xVar,yVar
-  if xVar eq 0 then begin
-    p1=plot(yvar,dimensions=[1600,1200],thick=2,margin=50,/device)
+function lp, xVar,yVar,op=op
+
+  if isa(op) eq 0 then begin
+    if max(xVar) ne 0 then begin
+      p1=plot(xvar,yvar,dimensions=[1600,1200],margin=[150,100,25,25],/device)    
+    endif else begin
+      p1=plot(yvar,dimensions=[1600,1200],margin=[150,100,25,25],/device)
+    endelse
   endif else begin
-    p1=plot(xvar,yvar,dimensions=[1600,1200],thick=2,margin=50,/device)
-  endelse
+    if max(xVar) ne 0 then begin
+      p1=plot(xvar,yvar,dimensions=[1600,1200],margin=[150,100,25,25],/device,/overplot)
+    endif else begin
+      p1=plot(yvar,dimensions=[1600,1200],margin=[150,100,25,25],/device,/overplot)
+    endelse
+  endelse  
+  
+  p1.font_size=22
+  p1.thick=2
   
   return,p1
 end
