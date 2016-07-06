@@ -36,7 +36,8 @@ end
 function q1, var
   varSort=sort(var)
   varSorted=var[varSort]
-  return,varSorted[n_elements(var)*.25]
+  varSorted=varSorted[0:ceil(.5*n(var))]
+  return,mean(varSorted)
 end
 
 
@@ -44,7 +45,8 @@ end
 function q3, var
   varSort=sort(var)
   varSorted=var[varSort]
-  return,varSorted[n_elements(var)*.75]
+  varSorted=varSorted[ceil(.5*n(var)):ceil(n(var))]
+  return,mean(varSorted)
 end
 
 
@@ -89,11 +91,40 @@ function hist, var, binsize=binsize, minval=minval
   b1.xrange=[0,n1(h1)]
   b1.xmajor=n1(h1)+1
   b1.ymajor=8
-  b1.xtickname=[string(inds,format='(f0.1)'),string(max(inds)+(inds[2]-inds[1]),format='(f0.1)'),' ',' ']
+  b1.xtickname=[string(inds,format='(f0.1)'),string(max(inds)+(inds[2]-inds[1])),' ',' ']
   b1.xtext_orientation=90
   b1.xticklen=0
   return,b1
 end  
+
+
+
+
+function cdphist, var
+  
+  binEdges=[1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,10.5,14.,17.,19.,21.,23.,25.,27.,29.,31.,33.,35.,37.,39.,41.,43.,45.,47.,49.]
+  binEdgesB=[1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,10.5,14.,17.,19.,21.,23.,25.,27.,29.,31.,33.,35.,37.,39.,41.,43.,45.,47.,49.,50.]
+  widths=binedges-shift(binEdges,1)
+  widths[0]=1
+  
+  freq=widths*var
+  
+  var=freq/total(freq)
+  var=[var,0]
+  
+  x=indgen(28)
+  b1=barplot(x,var,dimensions=[1000,7000],histogram=1,margin=[130,100,50,20],/device,font_size=22)
+
+  ;varRel=
+
+;  b1.xmajor=n1(h1)+1
+  b1.ymajor=10
+  b1.xtickname=[string(binEdges),'50.']
+  b1.xtext_orientation=90
+  ;b1.xticklen=0
+  return,b1
+end
+
 
 
 
